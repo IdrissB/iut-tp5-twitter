@@ -1,11 +1,7 @@
 <template>
   <div class="timeline">
     <h1>Liste de tweets</h1>
-    <ul v-for="tweet in tweets">
-      <li>
-        <tweet :tweet="tweet"/>
-      </li>
-    </ul>
+    <feed :tweets="tweets"></feed>
   </div>
 </template>
 
@@ -16,9 +12,10 @@ Vue.use(Resource)
 var tweet1 = {auteur: 'Idriss', contenu: 'Bonjour Twitter'}
 var tweet2 = {auteur: 'Michel', contenu: 'La canicule c\'est chaud'}
 var tweet3 = {auteur: 'Jean', contenu: 'Alexandra tu arrêtes maintenant'}
-import Tweet from './Tweet'
+import Feed from './Feed'
 export default {
-  components: {Tweet},
+  // permet d'utiliser feed dans le template
+  components: {Feed},
   name: 'timeline',
   data () {
     return {
