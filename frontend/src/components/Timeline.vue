@@ -1,9 +1,9 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <ul>
+  <div class="timeline">
+    <h1>Liste de tweets</h1>
+    <ul v-for="tweet in tweets">
       <li>
-      <router-link to="/timeline">Timeline</router-link>
+      {{ tweet }}
       </li>
     </ul>
   </div>
@@ -11,10 +11,10 @@
 
 <script>
 export default {
-  name: 'hello',
+  name: 'timeline',
   data () {
     return {
-      msg: 'Bienvenue sur Twitter'
+      tweets: ['tweet 1', 'tweet 2', 'tweet 3']
     }
   }
 }
@@ -22,21 +22,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
 ul {
   list-style-type: none;
   padding: 0;
 }
-
 li {
-  display: inline-block;
+  display: block;
   margin: 0 10px;
-}
-
-a {
-  color: #42b983;
 }
 </style>
