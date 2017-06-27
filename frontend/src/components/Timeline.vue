@@ -1,7 +1,10 @@
 <template>
   <div class="timeline">
     <h1>Liste de tweets</h1>
+    <p v-if="loading"> Chargement des tweets en cours… </p>
+    <p v-else>
     <feed :tweets="tweets"></feed>
+    </p>
   </div>
 </template>
 
