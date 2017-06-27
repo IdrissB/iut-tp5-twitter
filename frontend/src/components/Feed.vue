@@ -1,10 +1,15 @@
 <template>
-  <div class="timeline">
-    <ul v-for="tweet in tweets">
-      <li class="tweet">
-        <tweet :tweet="tweet"/>
-      </li>
-    </ul>
+  <div class="feed">
+    <div v-if="loading">
+      Chargement des tweets en cours…
+    </div>
+    <div v-else>
+      <ul v-for="tweet in tweets">
+        <li class="tweet">
+          <tweet :tweet="tweet" @retweeted="retweet"/>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -13,7 +18,14 @@ import Tweet from './Tweet'
 export default {
   name: 'feed',
   components: {Tweet},
-  props: ['tweets']
+  props: ['tweets', 'loading'],
+  data () {
+  },
+  methods: {
+    retweet: function (id) {
+      this.$emit('retweeted', id)
+    }
+  }
 }
 </script>
 
@@ -29,5 +41,13 @@ li.tweet {
  border-color: gray;
  width: 500px;
  margin: auto;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: block;
+  margin: 0 10px;
 }
 </style>

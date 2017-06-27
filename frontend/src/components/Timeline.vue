@@ -1,9 +1,7 @@
 <template>
   <div class="timeline">
     <h1>Liste de tweets</h1>
-    <p v-if="loading"> Chargement des tweets en cours… </p>
-    <p v-else>
-    <feed :tweets="tweets"></feed>
+    <feed :tweets="tweets" @retweeted="retweet" :loading="loading"></feed>
     </p>
   </div>
 </template>
@@ -22,6 +20,7 @@ export default {
   name: 'timeline',
   data () {
     return {
+      loading: true,
       tweets: [tweet1, tweet2, tweet3]
     }
   },
@@ -34,9 +33,14 @@ export default {
       this.$http.get('http://localhost:8080/list').then(response => {
         // get body data
         this.tweets = response.body
+        this.loading = false
       }, response => {
           // error callback
       })
+    },
+    retweet: function (id) {
+      var tweet = this.tweets.find(tweet => id === tweet.id)
+      tweet.retweeters.push({handle: 'johndoe'})
     }
   }
 }
@@ -44,12 +48,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: block;
-  margin: 0 10px;
-}
+
 </style>
