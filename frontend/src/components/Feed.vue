@@ -19,8 +19,6 @@ export default {
   name: 'feed',
   components: {Tweet},
   props: ['tweets', 'loading'],
-  data () {
-  },
   methods: {
     retweet: function (id) {
       this.$emit('retweeted', id)
