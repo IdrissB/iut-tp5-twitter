@@ -9,7 +9,7 @@
     <div>
       <ul>
         <li class="button"><icon name="reply"/></li>
-        <li class="button" v-if="isRetweetable">
+        <li class="button" v-if="isRetweetable()">
         <a @click="retweet()">
           <icon name="retweet"/>{{ tweet.retweeters.length}}
         </a>
