@@ -1,6 +1,6 @@
 <template>
   <div class="utilisateurs">
-    <select id="utilisateur" @change="onChange($event.target.value)">
+    <select id="utilisateur" @change="changeUser($event.target.value)">
       <option disabled value="">Choisissez un utilisateur ...</option>
       <option v-for="utilisateur in utilisateurs" :value="utilisateur.handle">
       {{ utilisateur.prenom }} {{ utilisateur.nom }}

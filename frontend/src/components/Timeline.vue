@@ -3,7 +3,7 @@
     <h1>Liste de tweets</h1>
     <feed :tweets="tweets" @retweeted="retweet" :utilisateur="currentUser" :loading="loading"></feed>
     <h1>Liste utilisateurs</h1>
-    <utilisateurs :utilisateurs="utilisateurs" @utilisateurChanged="changeUser" ></utilisateurs>
+    <utilisateurs :utilisateurs="utilisateurs" @changeUser="changeUser" ></utilisateurs>
     </p>
   </div>
 </template>
@@ -60,10 +60,7 @@ export default {
       for (let i = 0; i < this.utilisateurs.length; i++) {
         if (this.utilisateurs[i].handle === handle) {
           this.currentUser = this.utilisateurs[i]
-          this.$http.get('http://localhost:8080/feed/' + handle).then(response => {
-            this.tweets = response.body
-          }, response => {
-          })
+          console.log(this.currentUser.handle)
         }
       }
     }

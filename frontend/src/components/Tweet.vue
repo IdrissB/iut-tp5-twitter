@@ -9,7 +9,14 @@
     <div>
       <ul>
         <li class="button"><icon name="reply"/></li>
-        <li class="button"><a @click="retweet()"><icon name="retweet"/>{{ tweet.retweeters.length}}</a></li>
+        <li class="button" v-if="isRetweetable">
+        <a @click="retweet()">
+          <icon name="retweet"/>{{ tweet.retweeters.length}}
+        </a>
+        </li>
+        <li class="button" v-else="">
+          <icon name="retweet"/>{{ tweet.retweeters.length}}
+        </li>
         <li class="button"><icon name="heart"/></li>
         <li class="button"><icon name="envelope"/></li>
       </ul>
@@ -24,7 +31,7 @@ import Icon from 'vue-awesome/components/Icon'
 export default {
   components: {Icon},
   name: 'tweet',
-  props: ['tweet'],
+  props: ['tweet', 'utilisateur'],
   created () {
     moment.locale('fr')
   },
@@ -33,13 +40,23 @@ export default {
       return moment(this.tweet.date).fromNow()
     },
     retweet: function () {
-      this.$http.get('http://localhost:8080/retweet', {params: {utilisateur: 'coldplay', tweet: this.tweet.id}, responseType: 'text'}).then(response => {
+      this.$http.get('http://localhost:8080/retweet', {params: {utilisateur: this.utilisateur.handle, tweet: this.tweet.id}, responseType: 'text'}).then(response => {
         // get body data
         this.tweets = response.body
         this.$emit('retweeted', this.tweet.id)
       }, response => {
         this.$emit('fail retweeted', this.tweet.id)
       })
+    },
+    isRetweetable: function () {
+      if (this.utilisateur.handle === this.tweet.auteur.handle) {
+        return false
+      }
+      for (let i = 0; i < this.tweet.retweeters.length; i++) {
+        if (this.tweet.retweeters[i].handle === this.utilisateur.handle) {
+          return false
+        }
+      }
     }
   }
 }
